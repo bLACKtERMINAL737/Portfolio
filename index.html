@@ -122,8 +122,9 @@
                 </h1>
                 
                 <p class="text-2xl text-blue-300 mb-6 font-light">
-                    Aspiring AI Engineer
+                    <span id="typing"></span>
                 </p>
+
                 
                 <p class="text-slate-300 leading-relaxed mb-8 text-lg">
                     Passionate about building intelligent systems with strong foundations in
@@ -415,6 +416,25 @@
     <script>
         // Set current year
         document.getElementById('year').textContent = new Date().getFullYear();
+        const roles = ["Aspiring AI Engineer", "Competitive Programmer", "Problem Solver"];
+        let i = 0, j = 0, deleting = false;
+
+        setInterval(() => {
+        const el = document.getElementById("typing");
+        if (!el) return;
+
+        if (!deleting) {
+        el.textContent = roles[i].slice(0, ++j);
+        if (j === roles[i].length) deleting = true;
+        } 
+        else {
+        el.textContent = roles[i].slice(0, --j);
+        if (j === 0) {
+        deleting = false;
+        i = (i + 1) % roles.length;
+        }
+        }
+        }, 120);
 
         // Create animated stars
         const starsContainer = document.getElementById('stars-container');
@@ -446,5 +466,14 @@
             observer.observe(el);
         });
     </script>
+    <script>
+         fetch("https://api.github.com/users/bLACKtERMINAL737")
+         .then(res => res.json())
+         .then(data => {
+         const repoEl = document.getElementById("github-repositories");
+         if (repoEl) repoEl.textContent = data.public_repos;
+});
+</script>
+
 </body>
 </html>
